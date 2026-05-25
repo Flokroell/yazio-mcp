@@ -1,5 +1,5 @@
 {
-  "name": "yazio-mcp",
+  "name": "@flokroell/yazio-mcp",
   "version": "1.0.0",
   "description": "Connect your Yazio calorie tracker to Claude and other AI agents via MCP",
   "type": "module",

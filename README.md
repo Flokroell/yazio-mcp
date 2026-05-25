@@ -29,7 +29,7 @@ No install needed. Add to your Claude config:
   "mcpServers": {
     "yazio": {
       "command": "npx",
-      "args": ["-y", "yazio-mcp"],
+      "args": ["-y", "@flokroell/yazio-mcp"],
       "env": {
         "YAZIO_EMAIL": "your@email.com",
         "YAZIO_PASSWORD": "your-password"
@@ -46,7 +46,7 @@ No install needed. Add to your Claude config:
   "mcpServers": {
     "yazio": {
       "command": "npx",
-      "args": ["-y", "yazio-mcp"],
+      "args": ["-y", "@flokroell/yazio-mcp"],
       "env": {
         "YAZIO_EMAIL": "your@email.com",
         "YAZIO_PASSWORD": "your-password"
@@ -59,10 +59,10 @@ No install needed. Add to your Claude config:
 ### Option 2: Global install
 
 ```bash
-npm install -g yazio-mcp
+npm install -g @flokroell/yazio-mcp
 ```
 
-Then use `"command": "yazio-mcp"` instead of npx in the config above.
+Then use `"command": "@flokroell/yazio-mcp"` instead of npx in the config above.
 
 ### Environment variables
 
