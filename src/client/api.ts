@@ -86,8 +86,7 @@ export class YazioClient {
   // --- Food Search ---
 
   async searchProducts(query: string, options?: { sex?: string; countries?: string[]; locales?: string[] }): Promise<ProductSearchResult[]> {
-    const params = new URLSearchParams({ query });
-    if (options?.sex) params.set("sex", options.sex);
+    const params = new URLSearchParams({ query, sex: options?.sex || "male" });
     if (options?.countries) params.set("countries", options.countries.join(","));
     if (options?.locales) params.set("locales", options.locales.join(","));
     return this.request<ProductSearchResult[]>(`/products/search?${params}`);

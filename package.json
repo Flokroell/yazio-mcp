@@ -29,7 +29,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/flokroll/yazio-mcp"
+    "url": "https://github.com/Flokroell/yazio-mcp"
   },
   "engines": {
     "node": ">=18.0.0"
