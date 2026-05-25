@@ -1,0 +1,46 @@
+{
+  "name": "yazio-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Yazio calorie tracking — read and write nutrition data from AI agents",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "yazio-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "lint": "tsc --noEmit",
+    "test": "echo \"TODO: add tests\" && exit 0"
+  },
+  "keywords": [
+    "mcp",
+    "yazio",
+    "calories",
+    "nutrition",
+    "health",
+    "food-tracking",
+    "ai",
+    "claude",
+    "model-context-protocol"
+  ],
+  "author": "Florian Kröll <flo@kroellconsulting.de>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flokroll/yazio-mcp"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.5.0"
+  }
+}
