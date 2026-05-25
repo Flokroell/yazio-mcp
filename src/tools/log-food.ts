@@ -7,15 +7,15 @@ export const logFoodTool = {
   inputSchema: z.object({
     product_id: z.string().describe("Product UUID from search_food results"),
     meal: z.enum(["breakfast", "lunch", "dinner", "snack"]).describe("Which meal to log this under"),
-    amount: z.number().describe("Amount in grams (base unit)"),
+    amount_g: z.number().describe("Amount in grams"),
     date: z.string().describe("Date in YYYY-MM-DD format. Defaults to today.").optional(),
-    serving: z.string().describe("Serving name (e.g. 'piece', 'cup'). Optional.").optional(),
+    serving: z.string().describe("Serving name (e.g. 'piece', 'cup', 'portion'). Optional.").optional(),
     serving_quantity: z.number().describe("Number of servings. Optional.").optional(),
   }),
   handler: async (client: YazioClient, args: {
     product_id: string;
     meal: string;
-    amount: number;
+    amount_g: number;
     date?: string;
     serving?: string;
     serving_quantity?: number;
@@ -27,10 +27,13 @@ export const logFoodTool = {
       product_id: args.product_id,
       date,
       daytime: args.meal,
-      amount: args.amount,
+      amount: args.amount_g,
       serving: args.serving,
       serving_quantity: args.serving_quantity,
     });
-    return { success: true, id, date, meal: args.meal };
+    return {
+      success: true,
+      logged: { id, product_id: args.product_id, meal: args.meal, amount_g: args.amount_g, date },
+    };
   },
 };

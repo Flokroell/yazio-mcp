@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { YazioClient } from "../client/api.js";
+import type { ConsumedItem } from "../types/api.js";
 
 export const getMealsTool = {
   name: "get_meals",
@@ -10,6 +11,33 @@ export const getMealsTool = {
   handler: async (client: YazioClient, args: { date?: string }) => {
     const date = args.date || new Date().toISOString().split("T")[0];
     const items = await client.getConsumedItems(date);
-    return items;
+
+    const grouped: Record<string, Array<{ id: string; product_id: string; amount_g: number; serving: string; serving_quantity: number }>> = {
+      breakfast: [],
+      lunch: [],
+      dinner: [],
+      snack: [],
+    };
+
+    for (const item of (items.products || []) as ConsumedItem[]) {
+      const entry = {
+        id: item.id,
+        product_id: item.product_id,
+        amount_g: item.amount,
+        serving: item.serving,
+        serving_quantity: item.serving_quantity,
+      };
+      if (grouped[item.daytime]) {
+        grouped[item.daytime].push(entry);
+      }
+    }
+
+    const totalItems = Object.values(grouped).reduce((sum, arr) => sum + arr.length, 0);
+
+    return {
+      date,
+      total_items: totalItems,
+      meals: grouped,
+    };
   },
 };

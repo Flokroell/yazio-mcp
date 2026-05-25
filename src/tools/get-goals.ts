@@ -7,6 +7,14 @@ export const getGoalsTool = {
   inputSchema: z.object({}),
   handler: async (client: YazioClient) => {
     const goals = await client.getGoals();
-    return goals;
+    return {
+      calories_kcal: goals["energy.energy"],
+      protein_g: Math.round(goals["nutrient.protein"]),
+      carbs_g: Math.round(goals["nutrient.carb"]),
+      fat_g: Math.round(goals["nutrient.fat"]),
+      steps: goals["activity.step"],
+      weight_kg: goals["bodyvalue.weight"],
+      water_ml: goals.water,
+    };
   },
 };

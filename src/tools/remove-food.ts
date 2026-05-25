@@ -9,6 +9,6 @@ export const removeFoodTool = {
   }),
   handler: async (client: YazioClient, args: { item_id: string }) => {
     await client.removeConsumedItem(args.item_id);
-    return { success: true, removed: args.item_id };
+    return { success: true, removed_id: args.item_id };
   },
 };

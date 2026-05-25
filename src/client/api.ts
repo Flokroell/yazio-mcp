@@ -9,6 +9,7 @@ import type {
   UserGoals,
   UserWeight,
   WaterIntake,
+  WeightHistoryEntry,
 } from "../types/api.js";
 
 const BASE_URL = "https://yzapi.yazio.com/v15";
@@ -36,7 +37,14 @@ export class YazioClient {
       throw new Error(`Yazio API error (${res.status} ${path}): ${body}`);
     }
 
-    return res.json() as Promise<T>;
+    const contentLength = res.headers.get("content-length");
+    if (res.status === 201 || res.status === 204 || contentLength === "0") {
+      return undefined as T;
+    }
+
+    const text = await res.text();
+    if (!text || text.trim() === "") return undefined as T;
+    return JSON.parse(text) as T;
   }
 
   // --- User ---
@@ -108,6 +116,19 @@ export class YazioClient {
   async getWeight(date?: string): Promise<UserWeight | null> {
     const d = date || new Date().toISOString().split("T")[0];
     return this.request<UserWeight | null>(`/user/bodyvalues/weight/last?date=${d}`);
+  }
+
+  async getWeightHistory(startDate: string, endDate: string): Promise<WeightHistoryEntry[]> {
+    return this.request<WeightHistoryEntry[]>(`/user/bodyvalues/weight?start=${startDate}&end=${endDate}`);
+  }
+
+  async logWeight(kg: number, date?: string): Promise<void> {
+    const d = date || new Date().toISOString().split("T")[0];
+    const datetime = `${d} ${new Date().toTimeString().split(" ")[0]}`;
+    await this.request("/user/bodyvalues", {
+      method: "POST",
+      body: JSON.stringify({ weight: { date: datetime, value: kg } }),
+    });
   }
 
   // --- Water ---

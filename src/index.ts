@@ -33,7 +33,8 @@ const server = new McpServer({
   version: "0.1.0",
 });
 
-const tools = [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const tools: Array<{ name: string; description: string; inputSchema: any; handler: any }> = [
   getDailySummaryTool,
   getMealsTool,
   searchFoodTool,
@@ -55,7 +56,7 @@ for (const tool of tools) {
     tool.inputSchema.shape,
     async (args: Record<string, unknown>) => {
       try {
-        const result = await tool.handler(client, args as never);
+        const result = await tool.handler(client, args);
         return {
           content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
         };

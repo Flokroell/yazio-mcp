@@ -90,6 +90,11 @@ export interface UserWeight {
   source: string;
 }
 
+export interface WeightHistoryEntry {
+  date: string;
+  value: number;
+}
+
 export interface UserGoals {
   "energy.energy": number;
   "nutrient.protein": number;
